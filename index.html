@@ -12171,6 +12171,8 @@ p.digest_paragraph,
 &lt;/body&gt;&lt;/html&gt;"></iframe></figure></div></section></main>
 <script>
 function fit(f){try{const d=f.contentDocument;f.style.height=Math.max(d.documentElement.scrollHeight,d.body.scrollHeight)+"px"}catch(e){}}
-document.querySelectorAll("iframe").forEach(f=>f.addEventListener("load",()=>{fit(f);const d=f.contentDocument;d.querySelectorAll("img").forEach(i=>i.addEventListener("load",()=>fit(f)));new ResizeObserver(()=>fit(f)).observe(d.body)}));
+function setup(f){if(f.dataset.ready)return;const d=f.contentDocument;if(!d||d.readyState!=="complete"||!d.body)return;f.dataset.ready=1;fit(f);d.querySelectorAll("img").forEach(i=>i.addEventListener("load",()=>fit(f)));new ResizeObserver(()=>fit(f)).observe(d.body)}
+document.querySelectorAll("iframe").forEach(f=>{f.addEventListener("load",()=>setup(f));setup(f)});
+window.addEventListener("load",()=>document.querySelectorAll("iframe").forEach(f=>{setup(f);fit(f)}));
 document.getElementById("mobile").onchange=e=>{document.body.style.setProperty("--w",e.target.checked?"375px":"640px");setTimeout(()=>document.querySelectorAll("iframe").forEach(fit),50)};
 </script></body></html>
